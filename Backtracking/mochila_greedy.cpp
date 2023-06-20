@@ -10,7 +10,7 @@ int soa[MAX];
 
 
 int mochilaVoraz(int nivel, int n, int W, int wt[], int val[]) {
-    if (n == nivel|| W == 0)
+    if (n == 0|| W == 0)
         return 0;
     if (wt[n - 1] > W)
         return mochilaVoraz(nivel, n - 1, W, wt, val);
@@ -63,7 +63,7 @@ void Mochila(int p[], int b[], int M, int n) {
             nivel = nivel + 1;
         }
         else {
-            while ((!(MASHERMANOS(nivel)) || !CRITERIO(nivel, pact, n, M, voa, bact, p, b)) && (nivel > 0) ) {
+            while ((!(MASHERMANOS(nivel))) && (nivel > 0) ) {
                 RETROCEDER(nivel, p, b, pact, bact);
             }
         }
