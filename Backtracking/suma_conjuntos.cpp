@@ -31,7 +31,7 @@ int main(){
     int M = 30;
     int X[6];
     memset(X,0,sizeof(X));
-    SumaSubconjuntos(X,W,M,1,0,73);
+    SumaSubconjuntos(X,W,M,0,0,73);
     
     return 0;
 }
