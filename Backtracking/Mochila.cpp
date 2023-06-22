@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cstring>
+#include <numeric>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ bool CRITERIO(int nivel, int pact, int n, int M) {
 }
 
 bool MASHERMANOS(int nivel) {
-    return s[nivel-1] < 1;
+    return s[nivel-1] < 1; //return s[nivel-1] > 0; Beneficio Minimo y return s[nivel-1] < 1; Beneficio Maximo 
 }
 void RETROCEDER(int& nivel, int p[], int b[], int& pact, int& bact) {
     pact = pact - p[nivel-1] * s[nivel-1];
@@ -36,11 +37,12 @@ void RETROCEDER(int& nivel, int p[], int b[], int& pact, int& bact) {
 
 void Mochila(int p[], int b[], int M, int n) {
     int nivel = 1;
-    int voa = -INF;
+    //int voa = accumulate(b, b + n, 0) + 1;// Beneficio Minimo
+    int voa = -INF; //Beneficio Maximo
     int pact = 0, bact = 0;
     while (nivel > 0) {
         GENERAR(nivel, p, b, pact, bact);
-        if ((SOLUCION(nivel,pact,n, M)) && (bact > voa)) {
+        if ((SOLUCION(nivel,pact,n, M)) && (bact > voa)) { // (bact < voa) Beneficio Minimo y (bact > voa) Beneficio Maximo
             voa = bact;
             for (int i = 0; i < n; i++)
             {
