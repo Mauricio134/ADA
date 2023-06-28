@@ -35,7 +35,7 @@ bool MASHERMANOS(int nivel, int n){
 }
 
 void RETROCEDER(int &nivel, int &bact, int (&B)[N][N]){
-    bact = bact - B[nivel-1][s[nivel-1]];
+    bact = bact - B[nivel-1][s[nivel-1]-1];
     s[nivel-1] = 0;
     nivel = nivel - 1;
 }
@@ -46,12 +46,13 @@ void PDA(int n, int (&B)[N][N]){
     int bact = 0;
     do{
         GENERAR(nivel, bact, B);
-        if (SOLUCION(nivel, n) && bact > voa){
+        if (SOLUCION(nivel, n) && (bact > voa)){
             voa = bact;
             for(int i = 0; i < N; i++){
-                soa[i] = s[i];
+                soa[i] = s[i] + 1;
             }
         }
+
         else if (CRITERIO(nivel)){
             nivel = nivel + 1;
         }
@@ -71,7 +72,7 @@ int main(){
     };
     int n = 3;
     memset(s,-1,sizeof(s));
-    memset(soa, 0, sizeof(soa));
+    memset(soa, -1, sizeof(soa));
     PDA(n, B);
     for(int i = 0; i < n; i++){
         cout << soa[i] << " ";
