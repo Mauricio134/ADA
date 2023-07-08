@@ -4,20 +4,14 @@
 using namespace std;
 
 
-const int MAX = 3;
+const int MAX = 100;
 const int INF = 1e9;
 int s[MAX];
 int soa[MAX];
-int usada[MAX]; 
 
-void generar(int &nivel, int (&B)[3][3], int &bact){
+void generar(int &nivel, int h[], int l[], int &bact){
     s[nivel-1] = s[nivel-1]+1;
-    if(s[nivel-1] == 1){
-        bact = bact + B[nivel-1][s[nivel-1]-1];
-    }
-    else{
-        bact = bact + B[nivel-1][s[nivel-1]-1] -B[nivel-1][s[nivel-1]-2];
-    }
+    bact += abs(h[nivel-1]-l[s[nivel-1]-1]);
 }
 
 bool criterio(int &nivel){
@@ -37,20 +31,19 @@ bool mashermanos(int &nivel, int n){
     return s[nivel-1] < n;
 }
 
-void retroceder(int &nivel, int &bact, int (&B)[3][3]){
-    bact = bact - B[nivel-1][s[nivel-1]-1];
+void retroceder(int &nivel, int &bact, int h[], int l[]){
+    bact = bact - abs(h[nivel-1]-l[s[nivel-1]-1]);
     s[nivel-1] = 0;
     nivel = nivel - 1;
 }
 
-void backtracking(int (&B)[3][3]){
-    int n = sizeof(B)/sizeof(B[0]);
+void backtracking(int h[], int l[], int n){
     int nivel = 1;
-    int voa = -INF;
+    int voa = INF;
     int bact = 0;
     while(nivel != 0){
-        generar(nivel, B, bact);
-        if(solucion(nivel, n) && (bact > voa)){
+        generar(nivel, h, l, bact);
+        if(solucion(nivel, n) && (bact < voa)){
             voa = bact;
             for(int i = 0; i < n; i++){
                 soa[i] = s[i];
@@ -61,7 +54,7 @@ void backtracking(int (&B)[3][3]){
         }
         else{
             while(!mashermanos(nivel, n) && (nivel>0)){
-                retroceder(nivel, bact, B);
+                retroceder(nivel, bact, h, l);
             }
         }
     }
@@ -69,22 +62,14 @@ void backtracking(int (&B)[3][3]){
 
 
 int main() {
-    int B[3][3]={
-        {4,9,1},
-        {7,2,3},
-        {6,3,5}
-    };
-    memset(s,-1,sizeof(s));
+    int h[] = {178,168,190,170};
+    int l[] = {183,188,168,175};
+    int n = sizeof(h)/sizeof(h[0]);
+    memset(s,0,sizeof(s));
     memset(soa,0,sizeof(soa));
-    memset(usada,0,sizeof(usada));
-    backtracking(B);
-    for(int i = 0; i < 3; i++){
+    backtracking(h,l,n);
+    for(int i = 0; i < n; i++){
         cout << soa[i] << " ";
     }
-    int best = 0;
-    for(int i = 0; i < 3; i++){
-        best += B[i][soa[i]-1];
-    }
-    cout << best << endl;
     return 0;
 }

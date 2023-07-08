@@ -1,5 +1,5 @@
 //problema 1:
-/*#include <iostream>
+#include <iostream>
 #include <vector>
 #include <cmath>
 #include <climits>
@@ -72,59 +72,5 @@ int main() {
         cout << "Alumno " << i + 1 << ": Esquí " << asignacion_optima[i] + 1 << endl;
     }
 
-    return 0;
-}*/
-
-
-#include <iostream>
-#include <cstring>
-#include <queue>
-
-using namespace std;
-
-const int INF = 1e9;
-
-struct Par{
-    int s[4];
-    int suma;
-    Par(int v, int r){
-        memset(s,-1,sizeof(s));
-        s[0] = v;
-        suma = r;
-    }
-};
-
-void esquis(int a[], int l[], int n){
-    int nivel = 1;
-    int longitud = 1;
-    queue<Par> result;
-    while(nivel <= n){
-        if(nivel == 1){
-            int resp = abs(a[longitud-1]-l[longitud-1]);
-            result.push(Par(longitud, resp));
-        }
-        else{
-            for(int limite = 0; limite < n; limite++){
-                if(longitud - 1 != limite){
-                    result.front().s[nivel-1];
-                    
-                }
-            }
-        }
-        longitud++;
-        if(longitud > n){
-            longitud = 1;
-            nivel++;
-        }
-    }
-    return;
-}
-
-int main(){
-    int n = 4;
-    int altura[] = {178, 168, 190, 170};
-    int longitud[] = {183, 188, 168, 175};
-
-    esquis(altura,longitud,n);
     return 0;
 }
